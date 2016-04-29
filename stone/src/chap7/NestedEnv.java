@@ -32,8 +32,8 @@ public class NestedEnv implements Environment {
 		Environment e = where(name);
 		if(e == null) {						// どこにも変数が見つからなかったら
 			e = this;						// 自分のスコープに取り込んで
-			((EnvEx)e).putNew(name,value);	// あたらしく変数を追加
 		}
+		((EnvEx)e).putNew(name,value);	// あたらしく変数を追加
 	}
 	
 	public Environment where(String name) {
