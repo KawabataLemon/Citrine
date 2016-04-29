@@ -3,7 +3,7 @@ import stone.*;
 import stone.ast.ASTree;
 import stone.ast.NullStmnt;
 
-public class BasicInterptreter {
+public class BasicInterpreter {
 	public static void main(String[] args) throws ParseException {
 		run(new BasicParser(),new BasicEnv());
 	}

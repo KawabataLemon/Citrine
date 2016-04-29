@@ -137,50 +137,50 @@ import stone.ast.*;
 				throw new StoneException("bad operator",this);
 			}
 		}
-		
-		@Reviser public static class BlockEx extends BlockStmnt {
-			public BlockEx(List<ASTree> c) { super(c); }
-			public Object eval(Environment env) {
-				Object result = 0;
-				for(ASTree t : this) {
-					if(!(t instanceof NullStmnt))
-						result = ((ASTreeEx)t).eval(env);
-				}
-				return result;
+	}
+	@Reviser public static class BlockEx extends BlockStmnt {
+		public BlockEx(List<ASTree> c) { super(c); }
+		public Object eval(Environment env) {
+			Object result = 0;
+			for(ASTree t : this) {
+				if(!(t instanceof NullStmnt))
+					result = ((ASTreeEx)t).eval(env);
 			}
+			return result;
 		}
-		
-		@Reviser public static class IfEx extends IfStmnt {
-			public IfEx(List<ASTree> c) { super(c); }
-			public Object eval(Environment env) {
-				Object c = ((ASTreeEx)condition()).eval(env);
-				if(c instanceof Integer && ((Integer)c).intValue() != FALSE)
-				{
-					return ((ASTreeEx) thenBlock()).eval(env);
+	}
+	
+	@Reviser public static class IfEx extends IfStmnt {
+		public IfEx(List<ASTree> c) { super(c); }
+		public Object eval(Environment env) {
+			Object c = ((ASTreeEx)condition()).eval(env);
+			if(c instanceof Integer && ((Integer)c).intValue() != FALSE)
+			{
+				return ((ASTreeEx) thenBlock()).eval(env);
+			} else {
+				ASTree b = elseBlock();
+				if( b == null) {
+					return 0;
 				} else {
-					ASTree b = elseBlock();
-					if( b == null) {
-						return 0;
-					} else {
-						return ((ASTreeEx)b).eval(env);
-					}
-				}
-			}
-		}
-		
-		@Reviser public static class WhileEx extends WhileStmnt {
-			public WhileEx(List<ASTree> c) { super(c); }
-			public Object eval(Environment env) {
-				Object result = 0;
-				for(;;) {
-					Object c = ((ASTreeEx)condition()).eval(env);
-					if(c instanceof Integer && ((Integer)c).intValue() == FALSE) {
-						return result;
-					} else {
-						result = ((ASTreeEx)body()).eval(env);
-					}
+					return ((ASTreeEx)b).eval(env);
 				}
 			}
 		}
 	}
+	
+	@Reviser public static class WhileEx extends WhileStmnt {
+		public WhileEx(List<ASTree> c) { super(c); }
+		public Object eval(Environment env) {
+			Object result = 0;
+			for(;;) {
+				Object c = ((ASTreeEx)condition()).eval(env);
+				if(c instanceof Integer && ((Integer)c).intValue() == FALSE) {
+					return result;
+				} else {
+					result = ((ASTreeEx)body()).eval(env);
+				}
+			}
+		}
+	}
+
 }
